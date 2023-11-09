@@ -5,12 +5,12 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![star, issue](https://img.shields.io/badge/star%2C%20issue-welcome-brightgreen.svg)](https://github.com/huaisha1224/jd-assistant)
 
-京东抢购助手源代码Fork自[tychxn](https://github.com/tychxn/jd-assistant)
+大东子抢购助手源代码Fork自[tychxn](https://github.com/tychxn/jd-assistant)
 -由于原作者已不再更新、刚好我又有需要、所以在此基础上进行了修改；
 
 ## 主要功能
 
-- 登陆京东商城（[www.jd.com](http://www.jd.com/)）
+- 登陆大东子商城（[www.jd.com](http://www.jd.com/)）
   - 手机扫码登录
   - 保存/加载登录cookies (可验证cookies是否过期)
 - 商品查询操作
@@ -67,8 +67,8 @@ pip install -r requirements.txt
 
 ## 备注
 
-- 🌟强烈建议大家在部署代码前使用有货的商品测试下单流程，并且：在京东购物车结算页面设置发票为`电子普通发票-个人`，设置支付方式为`在线支付`，否则可能出现各种未知的下单失败问题。🌟
-- 京东商城的登陆/下单机制经常改动，原jd-assistant最后一次更新时间时间`2020.03.08`。如果功能失效，欢迎提issue，有时间我会来更新。
+- 🌟强烈建议大家在部署代码前使用有货的商品测试下单流程，并且：在大东子购物车结算页面设置发票为`电子普通发票-个人`，设置支付方式为`在线支付`，否则可能出现各种未知的下单失败问题。🌟
+- 大东子商城的登陆/下单机制经常改动，原jd-assistant最后一次更新时间时间`2020.03.08`。如果功能失效，欢迎提issue，有时间我会来更新。
 - 代码在`Win10`中编写，如果在其他平台上运行出行问题，欢迎提issue。
 
 ## 待完成的功能

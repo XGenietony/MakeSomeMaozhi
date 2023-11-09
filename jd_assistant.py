@@ -274,7 +274,7 @@ class Assistant(object):
 
         QRCode_file = 'QRcode.png'
         save_image(resp, QRCode_file)
-        logger.info('二维码获取成功，请打开京东APP扫描')
+        logger.info('二维码获取成功，请打开大东子APP扫描')
         open_image(QRCode_file)
         return True
 
@@ -498,7 +498,7 @@ class Assistant(object):
         """获取多个商品库存状态（旧）
 
         该方法需要登陆才能调用，用于同时查询多个商品的库存。
-        京东查询接口返回每种商品的状态：有货/无货。当所有商品都有货，返回True；否则，返回False。
+        大东子查询接口返回每种商品的状态：有货/无货。当所有商品都有货，返回True；否则，返回False。
 
         :param sku_ids: 多个商品的id。可以传入中间用英文逗号的分割字符串，如"123,456"
         :param area: 地区id
@@ -659,7 +659,7 @@ class Assistant(object):
         2.在提交订单时会对勾选的商品进行结算。
         3.部分商品（如预售、下架等）无法添加到购物车
 
-        京东购物车可容纳的最大商品种数约为118-120种，超过数量会加入购物车失败。
+        大东子购物车可容纳的最大商品种数约为118-120种，超过数量会加入购物车失败。
 
         :param sku_ids: 商品id，格式："123" 或 "123,456" 或 "123:1,456:2"。若不配置数量，默认为1个。
         :return:

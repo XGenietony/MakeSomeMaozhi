@@ -11,7 +11,7 @@ if __name__ == '__main__':
     #茅台 100012043978
     #zf40套 100067981596
     sku_ids = '100012043978'  # 商品id
-    area = '15_1213_3411_52667'  # 区域id
+    area = '15_1213_3411_52667'  # 区域id 杭州西湖区
     asst = Assistant()  # 初始化
     asst.login_by_QRcode()  # 扫码登陆
     # asst.buy_item_in_stock(sku_ids=sku_ids, area=area, wait_all=False, stock_interval=2)  # 根据商品是否有货自动下单

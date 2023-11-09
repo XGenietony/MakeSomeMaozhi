@@ -25,7 +25,7 @@ def find_cookie(cookies):
 
 
 async def main():
-    """使用pyppeteer库来登录京东、并获取cookie
+    """使用pyppeteer库来登录大东子、并获取cookie
     """
     print('请在弹出的网页中登录账号、推荐使用账户短信验证码的形式登录。')
     browser = await launch(headless=False, dumpio=True, autoClose=False,
