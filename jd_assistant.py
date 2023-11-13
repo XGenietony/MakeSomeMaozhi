@@ -40,9 +40,9 @@ from util import (
 
 class Assistant(object):
 
-    def __init__(self):
+    def __init__(self, cookie):
         use_random_ua = global_config.getboolean('config', 'random_useragent')
-        self.cookie = "__jdu=869693660; areaId=15; shshshfpa=6dee1ad2-6f69-0713-9f86-f2ada80801f0-1698983694; shshshfpx=6dee1ad2-6f69-0713-9f86-f2ada80801f0-1698983694; pinId=Kj7Sa5Loi8xzZQwuISQjkLV9-x-f3wj7; pin=jd_74f592b51225a; unick=XGenie; _tp=6SfjTHVcSi2QhPdafLXERbFVFznAYo4mzKv8ohJG0eQ%3D; _pst=jd_74f592b51225a; user-key=b38a6770-1cb9-4748-9098-585632669e24; mt_xid=V2_52007VwoVWlpQUF0YSClcDDBRFQFUXE4IHEsRQAAzURVOVVtXXgMbTl0HM1MVBglRUVwvShhfB3sDEk5cX0NaG0IbVA5kBCJQbVhiWh1IGF4HYgMRVl1oV1sWTw%3D%3D; ipLoc-djd=15-1213-3411-59343.4818261545; ipLocation=%u6d59%u6c5f; ceshi3.com=201; TARGET_UNIT=bjcenter; unpl=JF8EAK5nNSttWk0BVx8LEhIYHFRVW1pYTUdUO2VXXFlbTAENSQYTF0V7XlVdXxRLFx9uYRRUW1NOVA4bBysSEXteXVdZDEsWC2tXVgQFDQ8VXURJQlZAFDNVCV9dSRZRZjJWBFtdT1xWSAYYRRMfDlAKDlhCR1FpMjVkXlh7VAQrCxwaF0NfU1lcOEonBF9XNVRYXEJdASsDKxMgCQkIW1QOShAGIm4CXFpQSVMCGjIaIhM; autoOpenApp_downCloseDate_jd_homePage=1699366286208_1; source=PC; platform=pc; lpkLoginType=3; JSESSIONID=BEF0387661FC559BAD4F65AC9FD89472.s1; cn=45; qid_uid=72085b75-07c5-41eb-8974-a3b5e0732794; qid_fs=1699415537055; _distM=285206640865; __jdv=91748099|baidu|-|organic|notset|1699415895460; qid_ls=1699415537062; qid_ts=1699421393564; qid_vis=2; mba_muid=869693660; wlfstk_smdl=qrpq0b1ank3naxatx7vu71nd5txfbxj1; TrackID=12sKC-0i0-ioCLjjU-PDn75Y8ud__4H7DkgPALBgzP0_s61VPYHLIM4tFmShwstdh0UsQnyNAwD-GZx-ivPu6nMOveloWn-4nVHrwIYcrxUE; thor=3083BE905D150F1ABC9DB616A159627A69248FA392D1E4C5D149E8446BBD2149A9F58B022E2AD2B5F8AB40D4B9B817141F329C2D29055805C714D4F9153635A4D657CD239FA44832C3A08446D7A1F0D158E9CA1BF72E92AC73E50D0A417F9757B0B10889420518A76335A9DBE343D0A2EF1558409E8E31FE4C7F905B249F26593A7F2E7915EE0BA154BA083E19FF012218BF9722E561EBBD43E81C626A529ADE; flash=2_7YusNFf1BWk1kzfUEVUNFrp20CdnSKhKnc_Up6a6V8pIN2nd2oSrXeY9_E43POY9Tb0G2BYZ8teEm8lWwCc7Uq1NDU3vxq8pRNKOJPsoSXM*; 3AB9D23F7A4B3C9B=IEM4WPQZX2ZR5C7UHVRQ2SBS2QXPMZ5IHMZS3S2JMBYUQUVOVQCPQOJWD52PWUCE4CKMYTDQ6FIEF6KCWMOG33HDCI; __jdc=122270672; token=0b79b211da72aa248a26b0ac792fee50,3,944161; jsavif=1; 3AB9D23F7A4B3CSS=jdd03IEM4WPQZX2ZR5C7UHVRQ2SBS2QXPMZ5IHMZS3S2JMBYUQUVOVQCPQOJWD52PWUCE4CKMYTDQ6FIEF6KCWMOG33HDCIAAAAMLWGIT3QQAAAAACIYYPATCJ5R2JAX; _gia_d=1; __jda=122270672.869693660.1698983693.1699453873.1699491169.19; shshshsID=d43377bb1cc706a34b812bfae9a834a7_2_1699491188682; shshshfpb=AAoKMkbGLEu4a0m9pBxOfhvKtqAgB8BaYmDaUfwAAAAA; __jdb=122270672.2.869693660|19.1699491169"
+        self.cookie = cookie
         self.origin = "https://item.jd.com/"
         self.referer = "https://item.jd.com/"
         self.user_agent = DEFAULT_USER_AGENT if not use_random_ua else get_random_useragent()
@@ -921,6 +921,57 @@ class Assistant(object):
         self.sess.post(url=url, data=data, headers=headers)
 
     @check_login
+    def save_shipment_bundle(self):
+        """修改配送方式
+        适配京东国际下单，防止报错：“您选择的收货地址不支持当前的配送方式，请重新选择配送方式！”
+        """
+        url = 'https://trade.jd.com/shopping/dynamic/shipBundle/saveShipmentBundle.action'
+        # url = 'https://trade.jd.com/shopping/misc/js/module/payAndShipmentBundle.js?r=2023101703092'
+        data = {
+          "saveParam.venderId": 1,
+          "saveParam.orderUuid": "-893579276",
+          "saveParam.combinationBundleUuid": "CombinationBundleRelation_1088962523667529728",
+          "saveParam.bundleUuid": "BundleRelation_1088962523759804416+",
+          "saveParam.isOnlyisOnlyBigItem": 0,
+          "saveParam.zxjOrDj": "zxj",
+          "saveParam.checkHonor": "false",
+          "saveParam.carDeliver": "false",
+          "saveParam.shipmentUuid": "101612_1088962523768193024",
+          "saveParam.shipmentType": 65,
+          "saveParam.midPromiseType": 4,
+          "saveParam.midPromiseFormatType": 2,
+          "saveParam.promiseUuid": "101613_1088962523898216448",
+          "saveParam.promiseDate": "2022-6-4",
+          "saveParam.batchId": 0,
+          "saveParam.promiseTimeRange": "09:00-21:00",
+          "saveParam.promiseSendPay": "{'1':'3','35':'4','278':'0','237':'4','161':'0','30':'3'}",
+          "saveParam.combine": "false",
+          "overseaMerge": 1,
+          "presaleStockSign": 1,
+        }
+        headers = {
+            'User-Agent': self.user_agent,
+            'Host': 'trade.jd.com',
+            'Referer': 'https://trade.jd.com/shopping/order/getOrderInfo.action?overseaMerge=1',
+        }
+        try:
+            resp = self.sess.post(url=url, data=data, headers=headers)
+            resp_json = json.loads(resp.text)
+
+            if resp_json.get('success'):
+                logger.info('配送方式修改成功')
+                return True
+            else:
+                logger.info('配送方式修改失败')
+                logger.info(resp_json)
+                return False
+        except Exception as e:
+            logger.error(e)
+            return False
+
+
+
+    @check_login
     def submit_order(self):
         """提交订单
 
@@ -939,6 +990,7 @@ class Assistant(object):
             'vendorRemarks': '[]',
             'submitOrderParam.sopNotPutInvoice': 'false',
             'submitOrderParam.trackID': 'TestTrackId',
+            'overseaMerge': 1,
             'submitOrderParam.ignorePriceChange': '0',
             'submitOrderParam.btSupport': '0',
             'riskControl': self.risk_control,
@@ -1013,6 +1065,7 @@ class Assistant(object):
         for i in range(1, retry + 1):
             logger.info('第[%s/%s]次尝试提交订单', i, retry)
             self.get_checkout_page_detail()
+            self.save_shipment_bundle()
             if self.submit_order():
                 logger.info('第%s次提交订单成功', i)
                 return True
